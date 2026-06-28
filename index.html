@@ -279,6 +279,102 @@
             line-height: 1.3;
             white-space: nowrap;
         }
+
+        /* ===== 在地夥伴完整介紹區 ===== */
+        .partners-section {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 36px 18px 28px;
+        }
+        .partners-section .section-eyebrow {
+            display: block;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            color: #a8824e;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .partners-section h2 {
+            text-align: center;
+            margin: 0 0 8px;
+            font-size: clamp(20px, 3.6vw, 26px);
+            font-weight: 800;
+            color: #5b4530;
+        }
+        .partners-section .section-sub {
+            text-align: center;
+            margin: 0 0 24px;
+            font-size: 14px;
+            color: #8d7654;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        @media (min-width: 640px) {
+            .partners-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .partners-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .partner-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background-color: #ffffff;
+            border: 1px solid #ecdfc0;
+            border-radius: 18px;
+            padding: 14px;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .partner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(120, 96, 40, 0.16);
+            border-color: #d8c490;
+        }
+        .partner-card .partner-thumb {
+            flex: 0 0 auto;
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+        .partner-card .partner-body {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .partner-card .partner-name {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #5b4530;
+            margin-bottom: 3px;
+        }
+        .partner-card .partner-desc {
+            display: block;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #8d7654;
+        }
+        .partner-card .partner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            margin-top: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #b8862f;
+        }
+        .partner-card .partner-cta::after {
+            content: "→";
+            transition: transform 0.2s ease;
+        }
+        .partner-card:hover .partner-cta::after {
+            transform: translateX(3px);
+        }
     </style>
 </head>
 <body class="w-screen">
@@ -386,7 +482,90 @@
 
     </div>
 
-    <!-- 預留空間，避免底部選單列遮住地圖最下方內容 -->
+    <!-- 在地夥伴完整介紹區：填補地圖與底部選單之間的空間，提供更完整的資訊 -->
+    <section class="partners-section">
+        <span class="section-eyebrow">🌿 LOCAL PARTNERS</span>
+        <h2>認識福興的好夥伴</h2>
+        <p class="section-sub">點選卡片，直接前往各單位的 Facebook 或官方網站</p>
+
+        <div class="partners-grid">
+
+            <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">豐粘季</span>
+                    <span class="partner-desc">嚴選在地蜂蜜，純淨香甜，是福興最甜蜜的好滋味。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">福興穀倉</span>
+                    <span class="partner-desc">走進百年穀倉建築，感受過去稻米集散的歷史痕跡。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/p/%E8%8E%86%E8%80%98%E8%BE%B2%E5%A0%B4-100092421798210/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">莆耘農場</span>
+                    <span class="partner-desc">當季新鮮蔬果直送，從產地到餐桌的安心選擇。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Place&id=667271" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">番婆砲台</span>
+                    <span class="partner-desc">登錄國家文化記憶庫的歷史砲台，見證福興過往歲月。</span>
+                    <span class="partner-cta">國家文化記憶庫</span>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">晨照溫室農場</span>
+                    <span class="partner-desc">溫室栽培洋香瓜，香甜多汁、品質穩定。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">愷式好米</span>
+                    <span class="partner-desc">福興在地優質好米，粒粒飽滿、香氣十足。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">妞妞果園</span>
+                    <span class="partner-desc">當季新鮮火龍果與百香果，酸甜風味讓人回味。</span>
+                    <span class="partner-cta">前往 Facebook</span>
+                </div>
+            </a>
+
+            <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">阿瑋米香</span>
+                    <span class="partner-desc">傳統工法手作米香，香脆古早味。</span>
+                    <span class="partner-cta">前往官網</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- 預留空間，避免底部選單列遮住最下方內容 -->
     <div class="page-bottom-spacer"></div>
 
     <!-- 底部固定選單列：點擊任一項目會直接開新分頁前往該單位的 FB/官網 -->
