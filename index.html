@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>福興鄉特色農業與景點互動地圖</title>
+    <!-- 引入 Tailwind CSS 快速排版 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 隱藏捲軸，確保地圖全螢幕呈現 */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #fcf8ee; /* 配合地圖底色 */
+        }
+
+        /* 互動圖示的基礎設定與過渡動畫 */
+        .interactive-icon {
+            position: absolute;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Q彈的動畫曲線 */
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* 滑鼠懸停時的放大與浮起效果 */
+        .interactive-icon:hover {
+            transform: scale(1.15) translateY(-5px);
+            z-index: 20; /* 懸停時移到最上層 */
+        }
+
+        /* 增加懸停時的圖片陰影加深效果 */
+        .interactive-icon:hover img {
+            filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Tooltip 提示框樣式 */
+        .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        /* 滑鼠懸停時顯示 Tooltip */
+        .interactive-icon:hover .tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex items-center justify-center">
+
+    <!-- 地圖主容器：使用相對定位來放置其內部的絕對定位小圖示 -->
+    <div class="relative w-full max-w-7xl h-full max-h-screen">
+
+        <!-- 主地圖背景 -->
+        <img src="https://i.meee.com.tw/nJFIIuL.png" alt="福興鄉地圖" class="w-full h-full object-contain">
+
+        <!-- 豐粘季 互動圖示 -->
+        <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" id="icon-fengnianji" class="interactive-icon" style="top: 1%; left: 13%; width: 16%;">
+            <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往豐粘季 Facebook</div>
+        </a>
+
+        <!-- 福興穀倉 互動圖示 -->
+        <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" id="icon-fuxingranary" class="interactive-icon" style="top: 19%; left: 13%; width: 22%;">
+            <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往福興穀倉 Facebook</div>
+        </a>
+
+        <!-- 莆耘農場 互動圖示 -->
+        <a href="https://www.facebook.com/p/%E8%8E%86%E8%80%98%E8%BE%B2%E5%A0%B4-100092421798210/" target="_blank" rel="noopener noreferrer" id="icon-puyun" class="interactive-icon" style="top: 38%; left: 12%; width: 17%;">
+            <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往莆耘農場 Facebook</div>
+        </a>
+
+        <!-- 番婆砲台 互動圖示 -->
+        <a href="https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Place&id=667271" target="_blank" rel="noopener noreferrer" id="icon-fanpo" class="interactive-icon" style="top: 26%; left: 37%; width: 12%;">
+            <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往國家文化記憶庫</div>
+        </a>
+
+        <!-- 晨照溫室農場 互動圖示 -->
+        <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" id="icon-chenzhao" class="interactive-icon" style="top: 6%; left: 39%; width: 20%;">
+            <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往晨照溫室農場 Facebook</div>
+        </a>
+
+        <!-- 愷式好米 互動圖示 -->
+        <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" id="icon-kissrice" class="interactive-icon" style="top: 25%; left: 56%; width: 14%;">
+            <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往愷式好米 Facebook</div>
+        </a>
+
+        <!-- 妞妞果園 互動圖示 -->
+        <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" id="icon-niuniu" class="interactive-icon" style="top: 46%; left: 51%; width: 16%;">
+            <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往妞妞果園 Facebook</div>
+        </a>
+
+        <!-- 阿瑋米香 互動圖示 -->
+        <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" id="icon-awei" class="interactive-icon" style="top: 44%; left: 78%; width: 15%;">
+            <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="w-full h-auto drop-shadow-md">
+            <div class="tooltip">前往阿瑋米香官網</div>
+        </a>
+
+    </div>
+
+</body>
+</html>
