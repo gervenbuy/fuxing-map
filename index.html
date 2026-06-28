@@ -53,16 +53,21 @@
         .interactive-icon:hover .tooltip {
             opacity: 1;
         }
+
+        /* 鎖定地圖容器的長寬比例，圖片尚未載入完成時也能立即保留正確高度，避免空白跳動 */
+        #map-container {
+            aspect-ratio: 1535 / 1024;
+        }
     </style>
 </head>
 <body class="w-screen">
 
     <!-- 地圖主容器：使用相對定位來放置其內部的絕對定位小圖示 -->
     <!-- 容器高度完全由圖片本身決定（不設固定高度），確保任何螢幕尺寸下圖示百分比都對準圖片內容 -->
-    <div class="relative w-full max-w-7xl mx-auto">
+    <div class="relative w-full max-w-7xl mx-auto" id="map-container">
 
-        <!-- 主地圖背景：寬度撐滿容器，高度依比例自動計算，杜絕留白跑版 -->
-        <img src="https://i.meee.com.tw/IdcS7Vq.png" alt="福興鄉地圖" class="w-full h-auto block">
+        <!-- 主地圖背景：容器已用 aspect-ratio 鎖定比例，圖片直接填滿，不會有載入前的高度塌陷 -->
+        <img src="https://i.meee.com.tw/IdcS7Vq.png" alt="福興鄉地圖" class="w-full h-full object-contain block">
 
         <!-- 豐粘季 互動圖示 -->
         <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" id="icon-fengnianji" class="interactive-icon" style="top: 0%; left: 16.5%; width: 21%; z-index: 15;">
