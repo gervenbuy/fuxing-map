@@ -375,6 +375,11 @@
         .partner-card:hover .partner-cta::after {
             transform: translateX(3px);
         }
+
+        /* 豐粘季圖片本身留白較多，視覺上比其他小，單獨放大補齊 */
+        .thumb-fengnianji {
+            transform: scale(1.28);
+        }
     </style>
 </head>
 <body class="w-screen">
@@ -491,7 +496,7 @@
         <div class="partners-grid">
 
             <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
-                <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="partner-thumb">
+                <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="partner-thumb thumb-fengnianji">
                 <div class="partner-body">
                     <span class="partner-name">豐粘季</span>
                     <span class="partner-desc">嚴選在地蜂蜜，純淨香甜，是福興最甜蜜的好滋味。</span>
@@ -573,7 +578,7 @@
         <div class="bottom-tab-scroll">
 
             <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
-                <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季">
+                <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="thumb-fengnianji">
                 <span class="tab-name">豐粘季</span>
                 <span class="tab-desc">嚴選蜂蜜</span>
             </a>
