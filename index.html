@@ -3,58 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>福興鄉特色農業與景點互動地圖</title>
-    <!-- 引入 Tailwind CSS 快速排版 -->
+    <title>福興農遊地圖</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 確保地圖維持自然比例，避免手機直向螢幕產生留白跑版 */
         body {
             margin: 0;
-            background-color: #fcf8ee; /* 配合地圖底色 */
+            background-color: #f5ece0;
         }
 
-        /* 互動圖示的基礎設定與過渡動畫 */
+        /* ===== 互動圖示基礎 ===== */
         .interactive-icon {
             position: absolute;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Q彈的動畫曲線 */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             z-index: 10;
         }
-
-        /* 滑鼠懸停時的放大與浮起效果 */
         .interactive-icon:hover {
             transform: scale(1.15) translateY(-5px);
-            z-index: 20; /* 懸停時移到最上層 */
+            z-index: 20;
         }
-
-        /* 增加懸停時的圖片陰影加深效果 */
         .interactive-icon:hover img {
-            filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 10px 8px rgba(0,0,0,0.22));
         }
 
-        /* Tooltip 提示框樣式 */
+        /* 裝飾元素（不可點擊） */
+        .deco-icon {
+            position: absolute;
+            pointer-events: none;
+            z-index: 8;
+        }
+
+        /* Tooltip */
         .tooltip {
             position: absolute;
             bottom: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.75);
+            background-color: rgba(0,0,0,0.72);
             color: white;
             padding: 4px 10px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.2s ease-in-out;
         }
-
-        /* 滑鼠懸停時顯示 Tooltip */
         .interactive-icon:hover .tooltip {
             opacity: 1;
         }
 
-        /* ===== 進場動畫：圖示依序淡入＋彈跳出現 ===== */
+        /* ===== 進場動畫 ===== */
         @keyframes icon-entrance {
             0%   { opacity: 0; transform: scale(0.4) translateY(18px); }
             60%  { opacity: 1; transform: scale(1.08) translateY(-3px); }
@@ -66,7 +65,7 @@
             animation-delay: var(--enter-delay, 0s);
         }
 
-        /* ===== 待機微浮動：讓圖示像有生命般輕輕呼吸 ===== */
+        /* ===== 待機浮動 ===== */
         @keyframes icon-float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50%      { transform: translateY(var(--float-distance, -4px)) rotate(var(--float-tilt, 0.4deg)); }
@@ -77,85 +76,71 @@
             transform-origin: 50% 85%;
         }
 
-        /* ===== 點擊波紋回饋（不設定 position，避免覆蓋圖示原本的絕對定位） ===== */
-        .ripple-host {
-            overflow: visible;
-        }
+        /* ===== 波紋回饋 ===== */
+        .ripple-host { overflow: visible; }
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 214, 110, 0.55) 0%, rgba(255, 214, 110, 0) 70%);
-            transform: translate(-50%, -50%) scale(0);
+            background: radial-gradient(circle, rgba(255,214,110,0.55) 0%, rgba(255,214,110,0) 70%);
+            transform: translate(-50%,-50%) scale(0);
             pointer-events: none;
             z-index: 30;
             animation: ripple-pulse 0.6s ease-out forwards;
         }
         @keyframes ripple-pulse {
-            0%   { transform: translate(-50%, -50%) scale(0);   opacity: 0.9; }
-            100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+            0%   { transform: translate(-50%,-50%) scale(0);   opacity: 0.9; }
+            100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
         }
 
-        /* ===== 背景氛圍：緩慢飄移的陽光/雲影 ===== */
+        /* ===== 背景氛圍 ===== */
         .ambient-layer {
             position: absolute;
             inset: 0;
             overflow: hidden;
             pointer-events: none;
             z-index: 5;
-            border-radius: inherit;
         }
         .ambient-blob {
             position: absolute;
             border-radius: 50%;
             filter: blur(34px);
-            opacity: 0.55;
-            will-change: transform;
+            opacity: 0.45;
         }
         .ambient-blob.sun {
-            width: 38%;
-            height: 38%;
-            top: -8%;
-            left: -10%;
-            background: radial-gradient(circle, rgba(255, 248, 214, 0.85), rgba(255, 248, 214, 0));
+            width: 38%; height: 38%;
+            top: -8%; left: -6%;
+            background: radial-gradient(circle, rgba(255,248,214,0.85), rgba(255,248,214,0));
             animation: drift-sun 52s ease-in-out infinite;
         }
         .ambient-blob.cloud-a {
-            width: 30%;
-            height: 22%;
-            top: 8%;
-            left: 20%;
-            background: radial-gradient(ellipse, rgba(140, 150, 120, 0.18), rgba(140, 150, 120, 0));
+            width: 28%; height: 20%;
+            top: 10%; left: 25%;
+            background: radial-gradient(ellipse, rgba(140,150,120,0.15), rgba(140,150,120,0));
             animation: drift-cloud-a 46s ease-in-out infinite;
         }
         .ambient-blob.cloud-b {
-            width: 26%;
-            height: 20%;
-            top: 55%;
-            left: 60%;
-            background: radial-gradient(ellipse, rgba(140, 150, 120, 0.16), rgba(140, 150, 120, 0));
+            width: 24%; height: 18%;
+            top: 55%; left: 60%;
+            background: radial-gradient(ellipse, rgba(140,150,120,0.13), rgba(140,150,120,0));
             animation: drift-cloud-b 60s ease-in-out infinite;
         }
-        @keyframes drift-sun {
-            0%, 100% { transform: translate(0, 0); }
-            50%      { transform: translate(14%, 10%); }
-        }
-        @keyframes drift-cloud-a {
-            0%, 100% { transform: translate(0, 0); }
-            50%      { transform: translate(22%, 6%); }
-        }
-        @keyframes drift-cloud-b {
-            0%, 100% { transform: translate(0, 0); }
-            50%      { transform: translate(-18%, -8%); }
+        @keyframes drift-sun    { 0%,100%{transform:translate(0,0)}  50%{transform:translate(12%,8%)} }
+        @keyframes drift-cloud-a{ 0%,100%{transform:translate(0,0)}  50%{transform:translate(20%,5%)} }
+        @keyframes drift-cloud-b{ 0%,100%{transform:translate(0,0)}  50%{transform:translate(-16%,-7%)} }
+
+        /* ===== 地圖容器 ===== */
+        #map-container {
+            aspect-ratio: 4268 / 3160;
         }
 
-        /* ===== 頂部歡迎標題 ===== */
+        /* ===== 頂部標題 ===== */
         .map-header {
-            max-width: 80rem;
+            max-width: 90rem;
             margin: 0 auto;
-            padding: 22px 18px 14px;
+            padding: 20px 18px 12px;
             text-align: center;
             opacity: 0;
-            animation: header-fade-in 0.8s ease-out forwards;
+            animation: header-fade-in 0.8s ease-out 0.1s forwards;
         }
         @keyframes header-fade-in {
             0%   { opacity: 0; transform: translateY(-10px); }
@@ -171,60 +156,30 @@
             font-weight: 600;
         }
         .map-header h1 {
-            margin: 6px 0 4px;
-            font-size: clamp(22px, 4vw, 32px);
+            margin: 5px 0 3px;
+            font-size: clamp(20px, 4vw, 30px);
             font-weight: 800;
-            color: #5b4530;
-            letter-spacing: 0.02em;
+            color: #4a5e2a;
         }
         .map-header p {
             margin: 0;
-            font-size: clamp(13px, 2.4vw, 15px);
-            color: #8d7654;
+            font-size: clamp(12px, 2.2vw, 14px);
+            color: #7a8a5a;
         }
 
-        /* ===== 尊重「減少動態效果」的使用者設定 ===== */
-        @media (prefers-reduced-motion: reduce) {
-            .icon-enter {
-                animation: none;
-                opacity: 1;
-            }
-            .icon-float {
-                animation: none;
-            }
-            .ambient-blob {
-                animation: none;
-            }
-            .map-header {
-                animation: none;
-                opacity: 1;
-            }
-        }
+        /* ===== 底部預留 ===== */
+        .page-bottom-spacer { height: 96px; }
 
-        /* 鎖定地圖容器的長寬比例，圖片尚未載入完成時也能立即保留正確高度，避免空白跳動 */
-        #map-container {
-            aspect-ratio: 1535 / 1024;
-        }
-
-        /* 預留底部選單列的空間，避免地圖內容被遮住 */
-        .page-bottom-spacer {
-            height: 92px;
-        }
-
-        /* 底部固定選單列 */
+        /* ===== 底部固定選單列 ===== */
         .bottom-tab-bar {
             position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            left: 0; right: 0; bottom: 0;
             z-index: 50;
             background: linear-gradient(to bottom, #fffdf8, #fbf3e2);
             border-top: 1px solid #e6d9b8;
-            box-shadow: 0 -6px 16px rgba(120, 96, 40, 0.12);
+            box-shadow: 0 -6px 16px rgba(80,60,20,0.12);
             padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
         }
-
-        /* 橫向捲動列表 */
         .bottom-tab-scroll {
             display: flex;
             gap: 10px;
@@ -233,11 +188,7 @@
             scroll-snap-type: x proximity;
             scrollbar-width: none;
         }
-        .bottom-tab-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* 單一選單卡片 */
+        .bottom-tab-scroll::-webkit-scrollbar { display: none; }
         .tab-card {
             position: relative;
             flex: 0 0 auto;
@@ -254,240 +205,351 @@
             border: 1px solid #ecdfc0;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
-        .tab-card:hover,
-        .tab-card:active {
+        .tab-card:hover, .tab-card:active {
             transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(120, 96, 40, 0.18);
+            box-shadow: 0 6px 14px rgba(120,96,40,0.18);
             background-color: #fffaf0;
         }
         .tab-card img {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             object-fit: contain;
             margin-bottom: 4px;
         }
         .tab-card .tab-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: #5b4530;
-            line-height: 1.3;
+            font-size: 11px; font-weight: 700;
+            color: #5b4530; line-height: 1.3;
             white-space: nowrap;
         }
         .tab-card .tab-desc {
-            font-size: 10px;
-            color: #9c8a6a;
-            line-height: 1.3;
-            white-space: nowrap;
+            font-size: 10px; color: #9c8a6a;
+            line-height: 1.3; white-space: nowrap;
         }
 
-        /* ===== 在地夥伴完整介紹區 ===== */
+        /* ===== 在地夥伴介紹區 ===== */
         .partners-section {
-            max-width: 80rem;
+            max-width: 90rem;
             margin: 0 auto;
             padding: 36px 18px 28px;
         }
         .partners-section .section-eyebrow {
-            display: block;
-            text-align: center;
-            font-size: 12px;
-            letter-spacing: 0.15em;
-            color: #a8824e;
-            font-weight: 600;
+            display: block; text-align: center;
+            font-size: 12px; letter-spacing: 0.15em;
+            color: #a8824e; font-weight: 600;
             margin-bottom: 6px;
         }
         .partners-section h2 {
-            text-align: center;
-            margin: 0 0 8px;
+            text-align: center; margin: 0 0 8px;
             font-size: clamp(20px, 3.6vw, 26px);
-            font-weight: 800;
-            color: #5b4530;
+            font-weight: 800; color: #4a5e2a;
         }
         .partners-section .section-sub {
-            text-align: center;
-            margin: 0 0 24px;
-            font-size: 14px;
-            color: #8d7654;
+            text-align: center; margin: 0 0 24px;
+            font-size: 14px; color: #7a8a5a;
         }
         .partners-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 14px;
         }
-        @media (min-width: 640px) {
-            .partners-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-            .partners-grid { grid-template-columns: repeat(4, 1fr); }
-        }
+        @media (min-width: 640px)  { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .partners-grid { grid-template-columns: repeat(4, 1fr); } }
         .partner-card {
             position: relative;
-            display: flex;
-            align-items: center;
-            gap: 14px;
+            display: flex; align-items: center; gap: 14px;
             background-color: #ffffff;
             border: 1px solid #ecdfc0;
-            border-radius: 18px;
-            padding: 14px;
+            border-radius: 18px; padding: 14px;
             text-decoration: none;
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
         .partner-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 22px rgba(120, 96, 40, 0.16);
+            box-shadow: 0 10px 22px rgba(80,60,20,0.16);
             border-color: #d8c490;
         }
         .partner-card .partner-thumb {
-            flex: 0 0 auto;
-            width: 64px;
-            height: 64px;
+            flex: 0 0 auto; width: 64px; height: 64px;
             object-fit: contain;
         }
-        .partner-card .partner-body {
-            flex: 1 1 auto;
-            min-width: 0;
-        }
+        .partner-card .partner-body { flex: 1 1 auto; min-width: 0; }
         .partner-card .partner-name {
-            display: block;
-            font-size: 15px;
-            font-weight: 700;
-            color: #5b4530;
-            margin-bottom: 3px;
+            display: block; font-size: 15px; font-weight: 700;
+            color: #4a5e2a; margin-bottom: 3px;
         }
         .partner-card .partner-desc {
-            display: block;
-            font-size: 12.5px;
-            line-height: 1.5;
-            color: #8d7654;
+            display: block; font-size: 12.5px;
+            line-height: 1.5; color: #8d7654;
         }
         .partner-card .partner-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            margin-top: 6px;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #b8862f;
+            display: inline-flex; align-items: center; gap: 3px;
+            margin-top: 6px; font-size: 11.5px;
+            font-weight: 700; color: #b8862f;
         }
         .partner-card .partner-cta::after {
             content: "→";
             transition: transform 0.2s ease;
         }
-        .partner-card:hover .partner-cta::after {
-            transform: translateX(3px);
+        .partner-card:hover .partner-cta::after { transform: translateX(3px); }
+
+        /* 豐粘季 icon 視覺補大 */
+        .thumb-fengnianji { transform: scale(1.28); }
+
+        /* ===== 裝飾元素專屬動畫 ===== */
+
+        /* 吉祥物：跑步搖擺（身體左右扭動＋輕微彈跳） */
+        @keyframes mascot-run {
+            0%   { transform: rotate(-4deg) translateY(0px) scaleX(1); }
+            20%  { transform: rotate(3deg)  translateY(-6px) scaleX(0.97); }
+            40%  { transform: rotate(-3deg) translateY(0px) scaleX(1); }
+            60%  { transform: rotate(4deg)  translateY(-5px) scaleX(0.97); }
+            80%  { transform: rotate(-2deg) translateY(0px) scaleX(1); }
+            100% { transform: rotate(-4deg) translateY(0px) scaleX(1); }
+        }
+        .deco-mascot {
+            animation: mascot-run 1.2s ease-in-out infinite;
+            transform-origin: 50% 90%;
         }
 
-        /* 豐粘季圖片本身留白較多，視覺上比其他小，單獨放大補齊 */
-        .thumb-fengnianji {
-            transform: scale(1.28);
+        /* 裝飾牛：悠閒搖擺（緩慢左右晃動＋小幅前後傾） */
+        @keyframes cow-walk {
+            0%   { transform: rotate(0deg) translateX(0); }
+            25%  { transform: rotate(-1.5deg) translateX(-3px); }
+            50%  { transform: rotate(0deg) translateX(0); }
+            75%  { transform: rotate(1.5deg) translateX(3px); }
+            100% { transform: rotate(0deg) translateX(0); }
+        }
+        .deco-cow {
+            animation: cow-walk 2.8s ease-in-out infinite;
+            transform-origin: 50% 90%;
+        }
+
+        /* LOGO 脈動呼吸縮放 */
+        @keyframes logo-pulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.04); }
+        }
+        .deco-logo-pulse {
+            animation: logo-pulse 3.2s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+
+        /* 麻吉市集 LOGO 進場 + 浮動 */
+        @keyframes maji-entrance {
+            0%   { opacity: 0; transform: scale(0.5) translateY(20px); }
+            65%  { opacity: 1; transform: scale(1.06) translateY(-4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .deco-maji {
+            opacity: 0;
+            animation:
+                maji-entrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s forwards,
+                logo-pulse 3.8s ease-in-out 1.5s infinite;
+            transform-origin: 50% 50%;
+        }
+
+        /* 農遊地圖 LOGO 進場 + 浮動 */
+        @keyframes farmlogo-entrance {
+            0%   { opacity: 0; transform: translateY(-12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .deco-farmlogo {
+            opacity: 0;
+            animation:
+                farmlogo-entrance 0.7s ease-out 0.8s forwards,
+                icon-float 4.0s ease-in-out 1.6s infinite;
+            transform-origin: 50% 50%;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .icon-enter { animation: none; opacity: 1; }
+            .icon-float { animation: none; }
+            .ambient-blob { animation: none; }
+            .map-header { animation: none; opacity: 1; }
+            .deco-mascot { animation: none; }
+            .deco-cow { animation: none; }
+            .deco-maji { animation: none; opacity: 1; }
+            .deco-farmlogo { animation: none; opacity: 1; }
         }
     </style>
 </head>
 <body class="w-screen">
 
-    <!-- 歡迎標題區塊 -->
+    <!-- 頂部標題 -->
     <header class="map-header">
         <span class="eyebrow">🌾 FUXING FARM MAP</span>
-        <h1>福興鄉特色農業與景點互動地圖</h1>
+        <h1>福興農遊地圖</h1>
         <p>走進田野，點選圖示探索在地的好滋味與好故事</p>
     </header>
 
-    <!-- 地圖主容器：使用相對定位來放置其內部的絕對定位小圖示 -->
-    <!-- 容器高度完全由圖片本身決定（不設固定高度），確保任何螢幕尺寸下圖示百分比都對準圖片內容 -->
-    <div class="relative w-full max-w-7xl mx-auto" id="map-container">
+    <!-- 地圖主容器 -->
+    <div class="relative w-full max-w-screen-2xl mx-auto" id="map-container">
 
-        <!-- 主地圖背景：容器已用 aspect-ratio 鎖定比例，圖片直接填滿，不會有載入前的高度塌陷 -->
-        <img src="https://i.meee.com.tw/IdcS7Vq.png" alt="福興鄉地圖" class="w-full h-full object-contain block">
+        <!-- 背景地圖 -->
+        <img src="https://i.meee.com.tw/3WwEQrJ.png" alt="福興農遊地圖背景" class="w-full h-full object-contain block">
 
-        <!-- 背景氛圍：緩慢飄移的陽光與雲影，純裝飾不影響點擊 -->
+        <!-- 氛圍層 -->
         <div class="ambient-layer">
             <div class="ambient-blob sun"></div>
             <div class="ambient-blob cloud-a"></div>
             <div class="ambient-blob cloud-b"></div>
         </div>
 
-        <!-- 豐粘季 互動圖示 -->
-        <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" id="icon-fengnianji" class="interactive-icon ripple-host" style="top: 0%; left: 16.5%; width: 21%; z-index: 15;">
-            <div class="icon-enter" style="--enter-delay: 0s;">
-                <div class="icon-float" style="--float-duration: 3.4s; --float-delay: -0.6s; --float-distance: -4px; --float-tilt: 0.6deg;">
-                    <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="w-full h-auto drop-shadow-md">
+        <!-- ====== 裝飾元素（不可點擊） ====== -->
+
+        <!-- 麻吉市集LOGO（農遊地圖正下方置中，放大） -->
+        <div class="deco-icon" style="top:78.0%; left:42.0%; width:21.6%;">
+            <img src="https://i.meee.com.tw/GWM5zOg.png" alt="麻吉市集" class="w-full h-auto deco-maji">
+        </div>
+
+        <!-- 福興農遊地圖LOGO（置中地圖、下移、放大） -->
+        <div class="deco-icon" style="top:60.0%; left:27.0%; width:52.5%;">
+            <img src="https://i.meee.com.tw/0DtcbIQ.png" alt="福興農遊地圖" class="w-full h-auto deco-farmlogo">
+        </div>
+
+        <!-- 吉祥物（右下，跑步搖擺） -->
+        <div class="deco-icon" style="top:68.0%; left:79.0%; width:16.2%;">
+            <img src="https://i.meee.com.tw/fseJym2.png" alt="吉祥物" class="w-full h-auto deco-mascot">
+        </div>
+
+        <!-- 左下角裝飾牛（悠閒搖擺） -->
+        <div class="deco-icon" style="top:80.0%; left:8.0%; width:11.0%;">
+            <img src="https://i.meee.com.tw/gM39Mct.png" alt="裝飾牛" class="w-full h-auto deco-cow">
+        </div>
+
+        <!-- ====== 互動景點圖示 ====== -->
+
+        <!-- 豐樂牧場 -->
+        <a href="https://maps.app.goo.gl/Lb6ULgx9qgnzeCV87" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:14.0%; left:15.0%; width:16.9%;">
+            <div class="icon-enter" style="--enter-delay:0s;">
+                <div class="icon-float" style="--float-duration:3.8s; --float-delay:-0.4s; --float-distance:-4px; --float-tilt:0.4deg;">
+                    <img src="https://i.meee.com.tw/9vC41Zm.png" alt="豐樂牧場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往豐樂牧場</div>
         </a>
 
-        <!-- 福興穀倉 互動圖示 -->
-        <a href="https://maps.app.goo.gl/GVkfzVxrda7GByet6" target="_blank" rel="noopener noreferrer" id="icon-fuxingranary" class="interactive-icon ripple-host" style="top: 16%; left: 23%; width: 18%;">
-            <div class="icon-enter" style="--enter-delay: 0.08s;">
-                <div class="icon-float" style="--float-duration: 4.2s; --float-delay: -1.4s; --float-distance: -3px; --float-tilt: -0.3deg;">
+        <!-- 豐粘季 -->
+        <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:31.0%; width:16.5%; z-index:25;">
+            <div class="icon-enter" style="--enter-delay:0.08s;">
+                <div class="icon-float" style="--float-duration:3.4s; --float-delay:-1.1s; --float-distance:-5px; --float-tilt:0.6deg;">
+                    <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="w-full h-auto drop-shadow-md thumb-fengnianji">
+                </div>
+            </div>
+            <div class="tooltip">前往豐粘季 Facebook</div>
+        </a>
+
+        <!-- 福興穀倉 -->
+        <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:18.0%; left:47.0%; width:13.2%;">
+            <div class="icon-enter" style="--enter-delay:0.12s;">
+                <div class="icon-float" style="--float-duration:4.2s; --float-delay:-2.0s; --float-distance:-3px; --float-tilt:-0.3deg;">
                     <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往福興穀倉 Facebook</div>
         </a>
 
-        <!-- 莆耘農場 互動圖示 -->
-        <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" id="icon-puyun" class="interactive-icon ripple-host" style="top: 38%; left: 17%; width: 17%;">
-            <div class="icon-enter" style="--enter-delay: 0.16s;">
-                <div class="icon-float" style="--float-duration: 3.8s; --float-delay: -2.1s; --float-distance: -4px; --float-tilt: 0.5deg;">
-                    <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="w-full h-auto drop-shadow-md">
-                </div>
-            </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
-        </a>
 
-        <!-- 番婆砲台 互動圖示 -->
-        <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" id="icon-fanpo" class="interactive-icon ripple-host" style="top: 30%; left: 40%; width: 14%;">
-            <div class="icon-enter" style="--enter-delay: 0.32s;">
-                <div class="icon-float" style="--float-duration: 4.4s; --float-delay: -2.6s; --float-distance: -3px; --float-tilt: 0.3deg;">
-                    <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台" class="w-full h-auto drop-shadow-md">
-                </div>
-            </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
-        </a>
-
-        <!-- 晨照溫室農場 互動圖示 -->
-        <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" id="icon-chenzhao" class="interactive-icon ripple-host" style="top: 6%; left: 39%; width: 20%;">
-            <div class="icon-enter" style="--enter-delay: 0.24s;">
-                <div class="icon-float" style="--float-duration: 4.0s; --float-delay: -0.9s; --float-distance: -3px; --float-tilt: -0.4deg;">
+        <!-- 晨照溫室農場 -->
+        <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:67.0%; width:15.4%; z-index:25;">
+            <div class="icon-enter" style="--enter-delay:0.2s;">
+                <div class="icon-float" style="--float-duration:4.0s; --float-delay:-0.8s; --float-distance:-3px; --float-tilt:0.4deg;">
                     <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往晨照溫室農場 Facebook</div>
         </a>
-
-        <!-- 愷式好米 互動圖示 -->
-        <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" id="icon-kissrice" class="interactive-icon ripple-host" style="top: 25%; left: 56%; width: 14%;">
-            <div class="icon-enter" style="--enter-delay: 0.4s;">
-                <div class="icon-float" style="--float-duration: 3.6s; --float-delay: -1.8s; --float-distance: -5px; --float-tilt: 0.5deg;">
+        <!-- 愷式好米 -->
+        <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:27.0%; left:74.0%; width:11.0%;">
+            <div class="icon-enter" style="--enter-delay:0.28s;">
+                <div class="icon-float" style="--float-duration:3.6s; --float-delay:-1.6s; --float-distance:-5px; --float-tilt:0.5deg;">
                     <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往愷式好米 Facebook</div>
         </a>
 
-        <!-- 妞妞果園 互動圖示 -->
-        <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" id="icon-niuniu" class="interactive-icon ripple-host" style="top: 49%; left: 51%; width: 16%;">
-            <div class="icon-enter" style="--enter-delay: 0.48s;">
-                <div class="icon-float" style="--float-duration: 3.9s; --float-delay: -0.3s; --float-distance: -4px; --float-tilt: -0.5deg;">
+        <!-- 番婆防空塔 -->
+        <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:30.0%; left:62.0%; width:11.0%;">
+            <div class="icon-enter" style="--enter-delay:0.32s;">
+                <div class="icon-float" style="--float-duration:4.4s; --float-delay:-2.4s; --float-distance:-3px; --float-tilt:0.3deg;">
+                    <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆防空塔" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往國家文化資產網</div>
+        </a>
+
+        <!-- 妞妞果園 -->
+        <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:45.0%; left:77.0%; width:12.1%;">
+            <div class="icon-enter" style="--enter-delay:0.36s;">
+                <div class="icon-float" style="--float-duration:3.9s; --float-delay:-0.3s; --float-distance:-4px; --float-tilt:-0.5deg;">
                     <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往妞妞果園 Facebook</div>
         </a>
 
-        <!-- 阿瑋米香 互動圖示 -->
-        <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" id="icon-awei" class="interactive-icon ripple-host" style="top: 44%; left: 74%; width: 15%;">
-            <div class="icon-enter" style="--enter-delay: 0.56s;">
-                <div class="icon-float" style="--float-duration: 4.1s; --float-delay: -2.3s; --float-distance: -3px; --float-tilt: 0.4deg;">
+        <!-- 阿義手工麵線 -->
+        <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:32.0%; left:42.0%; width:15.1%;">
+            <div class="icon-enter" style="--enter-delay:0.24s;">
+                <div class="icon-float" style="--float-duration:3.7s; --float-delay:-1.9s; --float-distance:-4px; --float-tilt:0.4deg;">
+                    <img src="https://i.meee.com.tw/2JDGxTa.png" alt="阿義手工麵線" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往阿義手工麵線</div>
+        </a>
+
+        <!-- 樂採果溫室觀光農場 -->
+        <a href="https://www.facebook.com/happygreenhouse2018" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:31.0%; left:26.0%; width:16.0%;">
+            <div class="icon-enter" style="--enter-delay:0.16s;">
+                <div class="icon-float" style="--float-duration:4.1s; --float-delay:-1.3s; --float-distance:-3px; --float-tilt:-0.3deg;">
+                    <img src="https://i.meee.com.tw/5E4AIwA.png" alt="樂採果溫室觀光農場" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往粉絲頁</div>
+        </a>
+
+        <!-- 莆耘農場 -->
+        <a href="https://www.facebook.com/share/14gZxuu9BdJ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:42.0%; left:23.0%; width:13.2%;">
+            <div class="icon-enter" style="--enter-delay:0.2s;">
+                <div class="icon-float" style="--float-duration:3.8s; --float-delay:-2.2s; --float-distance:-4px; --float-tilt:0.5deg;">
+                    <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往莆耘農場 Facebook</div>
+        </a>
+
+        <!-- 外埔防空塔 -->
+        <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:47.0%; left:62.0%; width:15.2%;">
+            <div class="icon-enter" style="--enter-delay:0.4s;">
+                <div class="icon-float" style="--float-duration:4.3s; --float-delay:-0.7s; --float-distance:-3px; --float-tilt:0.3deg;">
+                    <img src="https://i.meee.com.tw/NIx3kU7.png" alt="外埔防空塔" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往外埔防空塔</div>
+        </a>
+
+        <!-- 阿瑋米香 -->
+        <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:53.0%; left:86.0%; width:12.1%;">
+            <div class="icon-enter" style="--enter-delay:0.44s;">
+                <div class="icon-float" style="--float-duration:4.0s; --float-delay:-2.5s; --float-distance:-3px; --float-tilt:0.4deg;">
                     <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">📍 開啟 Google 地圖導航</div>
+            <div class="tooltip">前往阿瑋米香官網</div>
+        </a>
+
+        <!-- 福興海堤 漂流光座標 -->
+        <a href="https://maps.app.goo.gl/UvXp85MCRgWy5K9a7" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:25.0%; left:0%; width:20.9%;">
+            <div class="icon-enter" style="--enter-delay:0.04s;">
+                <div class="icon-float" style="--float-duration:4.2s; --float-delay:-1.0s; --float-distance:-4px; --float-tilt:0.4deg;">
+                    <img src="https://i.meee.com.tw/GFD5dgd.png" alt="福興海堤 漂流光座標" class="w-full h-auto drop-shadow-md">
+                </div>
+            </div>
+            <div class="tooltip">前往福興海堤 漂流光座標</div>
         </a>
 
     </div>
 
-    <!-- 在地夥伴完整介紹區：填補地圖與底部選單之間的空間，提供更完整的資訊 -->
+    <!-- 在地夥伴完整介紹區 -->
     <section class="partners-section">
         <span class="section-eyebrow">🌿 LOCAL PARTNERS</span>
         <h2>認識福興的好夥伴</h2>
@@ -495,160 +557,184 @@
 
         <div class="partners-grid">
 
-            <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="partner-thumb thumb-fengnianji">
                 <div class="partner-body">
                     <span class="partner-name">豐粘季</span>
                     <span class="partner-desc">嚴選在地蜂蜜，純淨香甜，是福興最甜蜜的好滋味。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/GVkfzVxrda7GByet6" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">福興穀倉</span>
                     <span class="partner-desc">走進百年穀倉建築，感受過去稻米集散的歷史痕跡。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.facebook.com/share/14gZxuu9BdJ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">莆耘農場</span>
                     <span class="partner-desc">當季新鮮蔬果直送，從產地到餐桌的安心選擇。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://nchdb.boch.gov.tw/assets/overview/historicalBuilding/20041020000002" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台" class="partner-thumb">
                 <div class="partner-body">
-                    <span class="partner-name">番婆砲台</span>
-                    <span class="partner-desc">登錄國家文化記憶庫的歷史砲台，見證福興過往歲月。</span>
-                    <span class="partner-cta">國家文化資產網</span>
+                    <span class="partner-name">番婆防空塔</span>
+                    <span class="partner-desc">登錄國家文化資產的歷史砲台，見證福興過往歲月。</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">晨照溫室農場</span>
                     <span class="partner-desc">溫室栽培洋香瓜，香甜多汁、品質穩定。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">愷式好米</span>
                     <span class="partner-desc">福興在地優質好米，粒粒飽滿、香氣十足。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">妞妞果園</span>
                     <span class="partner-desc">當季新鮮火龍果與百香果，酸甜風味讓人回味。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
-            <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">阿瑋米香</span>
                     <span class="partner-desc">傳統工法手作米香，香脆古早味。</span>
-                    <span class="partner-cta">前往官網</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
+                </div>
+            </a>
+
+            <a href="https://maps.app.goo.gl/ZC11EhujaRREEeh37" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/5E4AIwA.png" alt="樂採果溫室觀光農場" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">樂採果溫室觀光農場</span>
+                    <span class="partner-desc">體驗採果樂趣，溫室觀光新體驗。</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
+                </div>
+            </a>
+
+            <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/2JDGxTa.png" alt="阿義手工麵線" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">阿義手工麵線</span>
+                    <span class="partner-desc">傳統手工製作，Q彈細緻的在地好麵線。</span>
+                    <span class="partner-cta">📍 Google 地圖導航</span>
                 </div>
             </a>
 
         </div>
     </section>
 
-    <!-- 預留空間，避免底部選單列遮住最下方內容 -->
+    <!-- 預留底部空間 -->
     <div class="page-bottom-spacer"></div>
 
-    <!-- 底部固定選單列：點擊任一項目會直接開新分頁前往該單位的 FB/官網 -->
+    <!-- 底部固定選單列 -->
     <nav class="bottom-tab-bar" aria-label="在地單位選單">
         <div class="bottom-tab-scroll">
 
-            <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="thumb-fengnianji">
                 <span class="tab-name">豐粘季</span>
                 <span class="tab-desc">嚴選蜂蜜</span>
             </a>
 
-            <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/GVkfzVxrda7GByet6" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉">
                 <span class="tab-name">福興穀倉</span>
-                <span class="tab-desc">百年穀倉故事</span>
+                <span class="tab-desc">百年穀倉</span>
             </a>
 
-            <a href="https://www.facebook.com/share/14gZxuu9BdJ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場">
                 <span class="tab-name">莆耘農場</span>
-                <span class="tab-desc">當季新鮮蔬菜</span>
+                <span class="tab-desc">當季蔬菜</span>
             </a>
 
-            <a href="https://nchdb.boch.gov.tw/assets/overview/historicalBuilding/20041020000002" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
-                <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台">
-                <span class="tab-name">番婆砲台</span>
+            <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+                <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆防空塔">
+                <span class="tab-name">番婆防空塔</span>
                 <span class="tab-desc">歷史古蹟</span>
             </a>
 
-            <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場">
                 <span class="tab-name">晨照溫室農場</span>
                 <span class="tab-desc">溫室洋香瓜</span>
             </a>
 
-            <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米">
                 <span class="tab-name">愷式好米</span>
                 <span class="tab-desc">在地優質好米</span>
             </a>
 
-            <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園">
                 <span class="tab-name">妞妞果園</span>
                 <span class="tab-desc">新鮮火龍果</span>
             </a>
 
-            <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+            <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
                 <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香">
                 <span class="tab-name">阿瑋米香</span>
                 <span class="tab-desc">傳統米香</span>
+            </a>
+
+            <a href="https://maps.app.goo.gl/ZC11EhujaRREEeh37" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+                <img src="https://i.meee.com.tw/5E4AIwA.png" alt="樂採果">
+                <span class="tab-name">樂採果農場</span>
+                <span class="tab-desc">溫室採果體驗</span>
+            </a>
+
+            <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+                <img src="https://i.meee.com.tw/2JDGxTa.png" alt="阿義手工麵線">
+                <span class="tab-name">阿義手工麵線</span>
+                <span class="tab-desc">手工麵線</span>
             </a>
 
         </div>
     </nav>
 
     <script>
-        // 點擊圖示或選單卡片時，產生波紋回饋效果，並在支援的手機上加入輕微震動
-        document.querySelectorAll('.ripple-host').forEach(function (host) {
-            host.addEventListener('click', function (e) {
+        document.querySelectorAll('.ripple-host').forEach(function(host) {
+            host.addEventListener('click', function(e) {
                 var rect = host.getBoundingClientRect();
-                var x = (e.clientX || rect.left + rect.width / 2) - rect.left;
-                var y = (e.clientY || rect.top + rect.height / 2) - rect.top;
+                var x = (e.clientX || rect.left + rect.width/2) - rect.left;
+                var y = (e.clientY || rect.top + rect.height/2) - rect.top;
                 var size = Math.max(rect.width, rect.height) * 1.2;
-
                 var ripple = document.createElement('span');
                 ripple.className = 'ripple';
                 ripple.style.width = size + 'px';
                 ripple.style.height = size + 'px';
                 ripple.style.left = x + 'px';
                 ripple.style.top = y + 'px';
-
                 host.appendChild(ripple);
-                ripple.addEventListener('animationend', function () {
-                    ripple.remove();
-                });
-
+                ripple.addEventListener('animationend', function() { ripple.remove(); });
                 if (window.navigator && typeof window.navigator.vibrate === 'function') {
                     window.navigator.vibrate(12);
                 }
