@@ -261,7 +261,6 @@
             background-color: #ffffff;
             border: 1px solid #ecdfc0;
             border-radius: 18px; padding: 14px;
-            text-decoration: none;
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
         .partner-card:hover {
@@ -293,6 +292,39 @@
         }
         .partner-card:hover .partner-cta::after { transform: translateX(3px); }
 
+
+        /* ===== 卡片雙按鈕：左欄FB/官網 + 右欄導航 ===== */
+        .partner-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .partner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            white-space: nowrap;
+        }
+        .partner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+        .partner-btn.btn-social {
+            background: #f0ead8;
+            color: #5b4530;
+            border: 1px solid #d8c490;
+        }
+        .partner-btn.btn-nav {
+            background: #4a5e2a;
+            color: #ffffff;
+            border: 1px solid #3a4e20;
+        }
         /* 豐粘季 icon 視覺補大 */
         .thumb-fengnianji { transform: scale(1.28); }
 
@@ -426,67 +458,67 @@
                     <img src="https://i.meee.com.tw/9vC41Zm.png" alt="豐樂牧場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往豐樂牧場</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 豐粘季 -->
-        <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:31.0%; width:16.5%; z-index:25;">
+        <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:31.0%; width:16.5%; z-index:25;">
             <div class="icon-enter" style="--enter-delay:0.08s;">
                 <div class="icon-float" style="--float-duration:3.4s; --float-delay:-1.1s; --float-distance:-5px; --float-tilt:0.6deg;">
                     <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="w-full h-auto drop-shadow-md thumb-fengnianji">
                 </div>
             </div>
-            <div class="tooltip">前往豐粘季 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 福興穀倉 -->
-        <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:18.0%; left:47.0%; width:13.2%;">
+        <a href="https://maps.app.goo.gl/cvGYDgBQQ2oqLKUWA" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:18.0%; left:47.0%; width:13.2%;">
             <div class="icon-enter" style="--enter-delay:0.12s;">
                 <div class="icon-float" style="--float-duration:4.2s; --float-delay:-2.0s; --float-distance:-3px; --float-tilt:-0.3deg;">
                     <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往福興穀倉 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
 
         <!-- 晨照溫室農場 -->
-        <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:67.0%; width:15.4%; z-index:25;">
+        <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:17.0%; left:67.0%; width:15.4%; z-index:25;">
             <div class="icon-enter" style="--enter-delay:0.2s;">
                 <div class="icon-float" style="--float-duration:4.0s; --float-delay:-0.8s; --float-distance:-3px; --float-tilt:0.4deg;">
                     <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往晨照溫室農場 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
         <!-- 愷式好米 -->
-        <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:27.0%; left:74.0%; width:11.0%;">
+        <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:27.0%; left:74.0%; width:11.0%;">
             <div class="icon-enter" style="--enter-delay:0.28s;">
                 <div class="icon-float" style="--float-duration:3.6s; --float-delay:-1.6s; --float-distance:-5px; --float-tilt:0.5deg;">
                     <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往愷式好米 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 番婆防空塔 -->
-        <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:30.0%; left:65.0%; width:11.0%;">
+        <a href="https://maps.app.goo.gl/qpaixehnCvydyoUV6" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:30.0%; left:65.0%; width:11.0%;">
             <div class="icon-enter" style="--enter-delay:0.32s;">
                 <div class="icon-float" style="--float-duration:4.4s; --float-delay:-2.4s; --float-distance:-3px; --float-tilt:0.3deg;">
-                    <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆防空塔" class="w-full h-auto drop-shadow-md">
+                    <img src="https://i.meee.com.tw/WEZooW8.png" alt="番婆防空塔" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往國家文化資產網</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 妞妞果園 -->
-        <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:45.0%; left:77.0%; width:12.1%;">
+        <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:45.0%; left:77.0%; width:12.1%;">
             <div class="icon-enter" style="--enter-delay:0.36s;">
                 <div class="icon-float" style="--float-duration:3.9s; --float-delay:-0.3s; --float-distance:-4px; --float-tilt:-0.5deg;">
                     <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往妞妞果園 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 阿義手工麵線 -->
@@ -496,47 +528,47 @@
                     <img src="https://i.meee.com.tw/2JDGxTa.png" alt="阿義手工麵線" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往阿義手工麵線</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 樂採果溫室觀光農場 -->
-        <a href="https://www.facebook.com/happygreenhouse2018" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:31.0%; left:26.0%; width:16.0%;">
+        <a href="https://maps.app.goo.gl/ZC11EhujaRREEeh37" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:31.0%; left:26.0%; width:16.0%;">
             <div class="icon-enter" style="--enter-delay:0.16s;">
                 <div class="icon-float" style="--float-duration:4.1s; --float-delay:-1.3s; --float-distance:-3px; --float-tilt:-0.3deg;">
                     <img src="https://i.meee.com.tw/5E4AIwA.png" alt="樂採果溫室觀光農場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往粉絲頁</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 莆耘農場 -->
-        <a href="https://www.facebook.com/share/14gZxuu9BdJ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:42.0%; left:23.0%; width:13.2%;">
+        <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:42.0%; left:23.0%; width:13.2%;">
             <div class="icon-enter" style="--enter-delay:0.2s;">
                 <div class="icon-float" style="--float-duration:3.8s; --float-delay:-2.2s; --float-distance:-4px; --float-tilt:0.5deg;">
                     <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往莆耘農場 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 外埔防空塔 -->
-        <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:47.0%; left:62.0%; width:15.2%;">
+        <a href="https://maps.app.goo.gl/yjgtwavt5DCHBEnWA" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:47.0%; left:62.0%; width:15.2%;">
             <div class="icon-enter" style="--enter-delay:0.4s;">
                 <div class="icon-float" style="--float-duration:4.3s; --float-delay:-0.7s; --float-distance:-3px; --float-tilt:0.3deg;">
                     <img src="https://i.meee.com.tw/NIx3kU7.png" alt="外埔防空塔" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往外埔防空塔</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 阿瑋米香 -->
-        <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:53.0%; left:86.0%; width:12.1%;">
+        <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" class="interactive-icon ripple-host" style="top:53.0%; left:86.0%; width:12.1%;">
             <div class="icon-enter" style="--enter-delay:0.44s;">
                 <div class="icon-float" style="--float-duration:4.0s; --float-delay:-2.5s; --float-distance:-3px; --float-tilt:0.4deg;">
                     <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往阿瑋米香官網</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 福興海堤 漂流光座標 -->
@@ -546,7 +578,7 @@
                     <img src="https://i.meee.com.tw/GFD5dgd.png" alt="福興海堤 漂流光座標" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往福興海堤 漂流光座標</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
         <!-- 福興鄉公所 麻吉市集 -->
@@ -556,7 +588,7 @@
                     <img src="https://i.meee.com.tw/t8Kfesw.png" alt="福興鄉公所 麻吉市集" class="w-full h-auto drop-shadow-md">
                 </div>
             </div>
-            <div class="tooltip">前往福興鄉公所 麻吉市集 Facebook</div>
+            <div class=tooltip>📍 導航到目的地</div>
         </a>
 
     </div>
@@ -568,105 +600,139 @@
         <p class="section-sub">點選卡片，開啟 Google 地圖導航，輕鬆找到每個在地好去處</p>
 
         <div class="partners-grid">
-
-            <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/ZqseyTL.png" alt="豐粘季" class="partner-thumb thumb-fengnianji">
                 <div class="partner-body">
                     <span class="partner-name">豐粘季</span>
                     <span class="partner-desc">在地純天然蜂蜜產地，點我開啟地圖，直接帶你找到甜蜜來源。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/profile.php?id=100000278614654" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/BCrG8Wf9GD8DRSFD6" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/cvGYDgBQQ2oqLKUWA" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/NMASvWs.png" alt="福興穀倉" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">福興穀倉</span>
                     <span class="partner-desc">彰化縣定古蹟，見證福興稻米集散歲月，點我導航前往。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/fuxingranary/" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/cvGYDgBQQ2oqLKUWA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/0JcunrQ.png" alt="莆耘農場" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">莆耘農場</span>
                     <span class="partner-desc">有機友善栽培，當季蔬菜產地直送，點我導航找到農場。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/share/14gZxuu9BdJ/?mibextid=wwXlfr" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/rjPnsUbXocdGHd5L9" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
-                <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆砲台" class="partner-thumb">
+            </div>
+            <div class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/WEZooW8.png" alt="番婆砲台" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">番婆防空塔</span>
                     <span class="partner-desc">百年歷史防空塔，福興鄉重要人文景點，點我開啟導航。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://nchdb.boch.gov.tw/assets/overview/historicalBuilding/20041020000002" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 文化資產網</a>
+                        <a href="https://maps.app.goo.gl/yjgtwavt5DCHBEnWA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/JRvpx3x.png" alt="晨照溫室農場" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">晨照溫室農場</span>
                     <span class="partner-desc">溫控溫室種植洋香瓜，香甜多汁，點我導航直達農場。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/chenzhaomelon/" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/2Gyyg6xrHVJdoQveA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/Yum2gge.png" alt="愷式好米" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">愷式好米</span>
                     <span class="partner-desc">福興鄉在地契作好米，粒粒飽滿香Q，點我導航採購去。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/KissRice/" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/twcTuJhZoUsUvuSm8" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/NbGr2iN.png" alt="妞妞果園" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">妞妞果園</span>
                     <span class="partner-desc">新鮮火龍果、百香果直接從果園到你手上，點我導航前往。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/NueNueFruit/" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/PoXSNVD9LoDJL5qg8" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/BonnlKu.png" alt="阿瑋米香" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">阿瑋米香</span>
                     <span class="partner-desc">職人手工製作米香，香脆酥口的古早滋味，點我導航找到店家。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.a-wei7145.com/" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 官方網站</a>
+                        <a href="https://maps.app.goo.gl/NYEb68N5jKvtuztZA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/ZC11EhujaRREEeh37" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/5E4AIwA.png" alt="樂採果溫室觀光農場" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">樂採果溫室觀光農場</span>
                     <span class="partner-desc">現摘現採的溫室觀光農場，親子體驗首選，點我導航出發。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/happygreenhouse2018" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/ZC11EhujaRREEeh37" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/2JDGxTa.png" alt="阿義手工麵線" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">阿義手工麵線</span>
                     <span class="partner-desc">古法日曬手工麵線，韌勁十足的在地古早味，點我導航前往。</span>
-                    <span class="partner-cta">📍 Google 地圖導航</span>
+                    <div class="partner-btns">
+                        <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Google 地圖</a>
+                        <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
-
-            <a href="https://www.facebook.com/profile.php?id=61591929268156&locale=zh_TW" target="_blank" rel="noopener noreferrer" class="partner-card ripple-host">
+            </div>
+            <div class="partner-card ripple-host">
                 <img src="https://i.meee.com.tw/t8Kfesw.png" alt="福興鄉公所 麻吉市集" class="partner-thumb">
                 <div class="partner-body">
                     <span class="partner-name">福興鄉公所 麻吉市集</span>
                     <span class="partner-desc">福興鄉在地市集，匯聚農產好物與特色攤位，點我前往粉絲頁。</span>
-                    <span class="partner-cta">前往 Facebook</span>
+                    <div class="partner-btns">
+                        <a href="https://www.facebook.com/profile.php?id=61591929268156&locale=zh_TW" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Facebook</a>
+                        <a href="https://maps.app.goo.gl/MCRonqFFaUqS3TDu9" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
                 </div>
-            </a>
+            </div>
+
+            <div class="partner-card ripple-host">
+                <img src="https://i.meee.com.tw/NIx3kU7.png" alt="外埔防空塔" class="partner-thumb">
+                <div class="partner-body">
+                    <span class="partner-name">外埔防空塔</span>
+                    <span class="partner-desc">福興鄉珍貴歷史遺跡，見證戰時歲月，點我導航前往。</span>
+                    <div class="partner-btns">
+                        <a href="https://maps.app.goo.gl/yjgtwavt5DCHBEnWA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-social">🔗 Google 地圖</a>
+                        <a href="https://maps.app.goo.gl/yjgtwavt5DCHBEnWA" target="_blank" rel="noopener noreferrer" class="partner-btn btn-nav">📍 導航</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </section>
@@ -696,8 +762,8 @@
                 <span class="tab-desc">當季蔬菜</span>
             </a>
 
-            <a href="https://maps.app.goo.gl/7idtBNF1v2yfC82g9" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
-                <img src="https://i.meee.com.tw/C7JrGJE.png" alt="番婆防空塔">
+            <a href="https://maps.app.goo.gl/qpaixehnCvydyoUV6" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+                <img src="https://i.meee.com.tw/WEZooW8.png" alt="番婆防空塔">
                 <span class="tab-name">番婆防空塔</span>
                 <span class="tab-desc">歷史古蹟</span>
             </a>
@@ -742,6 +808,12 @@
                 <img src="https://i.meee.com.tw/t8Kfesw.png" alt="福興鄉公所 麻吉市集">
                 <span class="tab-name">麻吉市集</span>
                 <span class="tab-desc">在地農產市集</span>
+            </a>
+
+            <a href="https://maps.app.goo.gl/yjgtwavt5DCHBEnWA" target="_blank" rel="noopener noreferrer" class="tab-card ripple-host">
+                <img src="https://i.meee.com.tw/NIx3kU7.png" alt="外埔防空塔">
+                <span class="tab-name">外埔防空塔</span>
+                <span class="tab-desc">歷史遺跡</span>
             </a>
 
         </div>
